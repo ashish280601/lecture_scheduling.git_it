@@ -8,7 +8,7 @@ import InstructorPanel from './InstructorPanel';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userType, setUserType] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -16,14 +16,14 @@ const App = () => {
       const decodedToken = parseJwt(token);
       if (decodedToken) {
         setIsLoggedIn(true);
-        setUserType(decodedToken.isAdmin);
+        setIsAdmin(decodedToken.isAdmin);
       }
     }
   }, []);
 
-  const handleLogin = (type) => {
+  const handleLogin = (isAdmin) => {
     setIsLoggedIn(true);
-    setUserType(type);
+    setIsAdmin(isAdmin);
   };
 
   return (
@@ -31,20 +31,23 @@ const App = () => {
       <div>
         <Toaster />
         <Routes>
-          <Route path="/" element={<Login onLogin={handleLogin} />} />
-          {/* Route to AdminPanel if user is logged in and is an admin */}
-          {isLoggedIn && userType === true && (
-            <Route path="/admin" element={<AdminPanel />} />
-          )}
-          {/* Route to InstructorPanel if user is logged in and is an instructor */}
-          {isLoggedIn && userType === false && (
-            <Route path="/instructor" element={<InstructorPanel />} />
-          )}
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? 9(
+                isAdmin ? (
+                  <Navigate to="/admin" />
+                ) : (
+                  <Navigate to="/instructor" />
+                )
+              ) : (
+                <Login onLogin={handleLogin} />
+              )
+            }
+          />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/instructor" element={<InstructorPanel />} />
         </Routes>
-        {/* Redirect to appropriate panel based on userType after login */}
-        {isLoggedIn && (
-          <Navigate to={userType === true ? "/admin" : "/instructor"} replace />
-        )}
       </div>
     </Router>
   );
