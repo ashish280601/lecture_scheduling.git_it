@@ -5,7 +5,7 @@ import InstructorForm from "./CreateInstructor";
 import Course from "./Course";
 import CourseTable from "./CourseTable";
 
-const hostUrl = "http://localhost:5000";
+const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com"
 
 const AdminPanel = () => {
   const [courses, setCourses] = useState([]);

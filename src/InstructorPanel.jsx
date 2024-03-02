@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com"
+
 const LecturesList = () => {
   const [lectures, setLectures] = useState([]);
 
@@ -11,7 +13,7 @@ const LecturesList = () => {
 
   const fetchLectures = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/lecture");
+      const res = await axios.get(`${hostUrl}/api/lecture`);
       console.log("res", res.data);
       setLectures(res.data);
     } catch (error) {

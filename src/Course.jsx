@@ -3,7 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const hostUrl = "http://localhost:5000";
+const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com"
 
 const Course = ({ fetchData }) => {
     const [newCourse, setNewCourse] = useState({});
