@@ -10,17 +10,6 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState("");
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (token) {
-  //     const decodedToken = parseJwt(token);
-  //     if (decodedToken) {
-  //       setIsLoggedIn(true);
-  //       setIsAdmin(decodedToken.isAdmin);
-  //     }
-  //   }
-  // }, []);
-
   const handleLogin = (token, userRole) => {
     setIsLoggedIn(true);
     setRole(userRole);

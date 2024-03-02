@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com";
 
@@ -21,8 +22,25 @@ const Login = ({ onLogin }) => {
       const { token, role } = res.data;
       console.log("Login successful. Role:", role);
       onLogin(token, role);
+      toast.success("Login Successful As Admin",{
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     } catch (error) {
-      setError('Invalid credentials');
+      toast.error("Invalid Credential", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     }
   };
 
@@ -32,8 +50,25 @@ const Login = ({ onLogin }) => {
       const { token, role } = res.data;
       console.log("Login successful. Role:", role);
       onLogin(token, role);
+      toast.success("Login Successful As Instructor",{
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     } catch (error) {
-      setError('Invalid credentials');
+      toast.error("Invalid Credential", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     }
   };
 
