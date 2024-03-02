@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import "./auth/style.css"
 
 const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com"
 
@@ -46,26 +47,33 @@ const CreateInstructor = ({ fetchData }) => {
   };
 
   return (
-    <div>
-      <h2>Add Instructor</h2>
-      <form onSubmit={handleAddInstructor}>
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          value={newInstructor?.name || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={newInstructor?.email || ""}
-          onChange={handleChange}
-        />
-        <button type="submit">Add</button>
-      </form>
+    <div className="add-container">
+  <h2>Add Instructor</h2>
+  <form onSubmit={handleAddInstructor} className="add-form">
+    <div className="form-group">
+      <label>Name</label>
+      <input
+        type="text"
+        placeholder="Enter name"
+        name="name"
+        value={newInstructor?.name || ""}
+        onChange={handleChange}
+      />
     </div>
+    <div className="form-group">
+      <label>Email</label>
+      <input
+        type="email"
+        placeholder="Enter email"
+        name="email"
+        value={newInstructor?.email || ""}
+        onChange={handleChange}
+      />
+    </div>
+    <button type="submit" className="add-btn">Add</button>
+  </form>
+</div>
+
   );
 };
 

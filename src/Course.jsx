@@ -45,40 +45,53 @@ const Course = ({ fetchData }) => {
         }
       };
   return (
-    <div>
-      <h2>Add Course</h2>
-      <form onSubmit={handleAddCourse}>
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          value={newCourse.name || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="Level"
-          name="level"
-          value={newCourse.level || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="description"
-          placeholder="Description"
-          value={newCourse.description || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          placeholder="Image URL"
-          name="image"
-          value={newCourse.image || ""}
-          onChange={handleChange}
-        />
-        <button type="submit">Add</button>
-      </form>
+    <div className="add-container">
+  <h2>Add Course</h2>
+  <form onSubmit={handleAddCourse} className="add-form">
+    <div className="form-group">
+      <label>Name</label>
+      <input
+        type="text"
+        placeholder="Enter name"
+        name="name"
+        value={newCourse.name || ""}
+        onChange={handleChange}
+      />
     </div>
+    <div className="form-group">
+      <label>Level</label>
+      <input
+        type="text"
+        placeholder="Enter level"
+        name="level"
+        value={newCourse.level || ""}
+        onChange={handleChange}
+      />
+    </div>
+    <div className="form-group">
+      <label>Description</label>
+      <input
+        type="text"
+        placeholder="Enter description"
+        name="description"
+        value={newCourse.description || ""}
+        onChange={handleChange}
+      />
+    </div>
+    <div className="form-group">
+      <label>Image URL</label>
+      <input
+        type="text"
+        placeholder="Enter image URL"
+        name="image"
+        value={newCourse.image || ""}
+        onChange={handleChange}
+      />
+    </div>
+    <button type="submit" className="add-btn">Add</button>
+  </form>
+</div>
+
   );
 };
 

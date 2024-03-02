@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const CourseTable = ({ courses, handleCourseSelection }) => {
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const handleRowClick = (course) => {
+    setSelectedRow(prevSelectedRow => {
+      // Toggle the selection: if the clicked row is already selected, unselect it, otherwise select it
+      return prevSelectedRow === course._id ? null : course._id;
+    });
+
+    handleCourseSelection(course);
+  };
+
   return (
     <div>
       <h2>Courses</h2>
@@ -17,7 +28,8 @@ const CourseTable = ({ courses, handleCourseSelection }) => {
           {courses?.map((course) => (
             <tr
               key={course?._id}
-              onClick={() => handleCourseSelection(course)}
+              onClick={() => handleRowClick(course)}
+              style={{ backgroundColor: selectedRow === course._id ? 'lightblue' : 'inherit' }} // Apply background color if row is selected
             >
               <td style={{ border: '1px solid black', padding: '8px' }}>{course?.name}</td>
               <td style={{ border: '1px solid black', padding: '8px' }}>{course?.level}</td>

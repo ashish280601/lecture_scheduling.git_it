@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com"
+const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com";
 
-const LecturesList = () => {
+const InstructorPanel = () => {
   const [lectures, setLectures] = useState([]);
 
   useEffect(() => {
@@ -30,6 +30,9 @@ const LecturesList = () => {
     }
   };
 
+  // Initialize serial number counter
+  let serialNumber = 0;
+
   return (
     <div>
       <h1>Lectures List</h1>
@@ -43,13 +46,19 @@ const LecturesList = () => {
           </tr>
         </thead>
         <tbody>
-          {lectures.map((lecture, index) => (
-            <tr key={lecture._id}>
-              <td style={{ border: "1px solid black", padding: "8px" }}>{index + 1}</td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>{new Date(lecture.date).toLocaleDateString()}</td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>{lecture.course.name}</td>
-              <td style={{ border: "1px solid black", padding: "8px" }}>{lecture.instructor.name}</td>
-            </tr>
+          {lectures.map((lecture) => (
+            // Add a conditional check for course being non-null
+            lecture?.course && (
+              <tr key={lecture._id}>
+                {/* Increment serial number only for rendered rows */}
+                <td style={{ border: "1px solid black", padding: "8px" }}>{++serialNumber}</td>
+                <td style={{ border: "1px solid black", padding: "8px" }}>
+                  {new Date(lecture.date).toLocaleDateString()}
+                </td>
+                <td style={{ border: "1px solid black", padding: "8px" }}>{lecture.course.name}</td>
+                <td style={{ border: "1px solid black", padding: "8px" }}>{lecture.instructor?.name}</td>
+              </tr>
+            )
           ))}
         </tbody>
       </table>
@@ -57,4 +66,4 @@ const LecturesList = () => {
   );
 };
 
-export default LecturesList;
+export default InstructorPanel;

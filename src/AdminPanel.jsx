@@ -4,8 +4,9 @@ import toast from "react-hot-toast";
 import InstructorForm from "./CreateInstructor";
 import Course from "./Course";
 import CourseTable from "./CourseTable";
+import "./auth/style.css";
 
-const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com"
+const hostUrl = "https://lecture-scheduling-api-git-it.onrender.com";
 
 const AdminPanel = () => {
   const [courses, setCourses] = useState([]);
@@ -59,6 +60,10 @@ const AdminPanel = () => {
 
   const handleCourseSelection = (course) => {
     setSelectedCourse(course);
+    if (!course) {
+      setSelectedInstructor("");
+      setLectureDate("");
+    }
   };
 
   const handleInstructorSelection = (instructorId) => {
@@ -80,9 +85,10 @@ const AdminPanel = () => {
       const existingLecture = courses.find(
         (course) =>
           course.instructor === selectedInstructor &&
-          new Date(course.date).toDateString() === new Date(lectureDate).toDateString()
+          new Date(course.date).toDateString() ===
+            new Date(lectureDate).toDateString()
       );
-  
+
       if (existingLecture) {
         toast.error("The instructor already has a lecture on this date");
         return;
@@ -179,33 +185,53 @@ const AdminPanel = () => {
       {activeModal === "courseTable" && (
         <CourseTable
           courses={courses}
+          fetchData={fetchCourses}
           handleCourseSelection={handleCourseSelection}
         />
       )}
-      {selectedCourse && (
-        <div>
-          <h2>Add Lecture to {selectedCourse.name}</h2>
-          <form onSubmit={handleAddLecture}>
-            <input
-              type="date"
-              value={lectureDate}
-              onChange={handleLectureDateChange}
-            />
-            <select
-              value={selectedInstructor}
-              onChange={(e) => handleInstructorSelection(e.target.value)}
+      {selectedCourse &&
+        courses.some((course) => course._id === selectedCourse._id) && (
+          <div className="company-name__lecture-form">
+            <h2 className="company-name__lecture-form-title">
+              Add Lecture to {selectedCourse.name}
+            </h2>
+            <form
+              onSubmit={handleAddLecture}
+              className="company-name__lecture-form"
             >
-              <option value="">Select Instructor</option>
-              {instructors.map((instructor) => (
-                <option key={instructor._id} value={instructor._id}>
-                  {instructor.name}
+              <input
+                type="date"
+                value={lectureDate}
+                onChange={handleLectureDateChange}
+                className="company-name__lecture-form-input"
+              />
+              <select
+                value={selectedInstructor}
+                onChange={(e) => handleInstructorSelection(e.target.value)}
+                className="company-name__lecture-form-select"
+              >
+                <option value="" className="company-name__lecture-form-option">
+                  Select Instructor
                 </option>
-              ))}
-            </select>
-            <button type="submit">Add Lecture</button>
-          </form>
-        </div>
-      )}
+                {instructors.map((instructor) => (
+                  <option
+                    key={instructor._id}
+                    value={instructor._id}
+                    className="company-name__lecture-form-option"
+                  >
+                    {instructor.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                className="company-name__lecture-form-btn company-name__lecture-form-btn--add"
+              >
+                Add Lecture
+              </button>
+            </form>
+          </div>
+        )}
     </div>
   );
 };

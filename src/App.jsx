@@ -8,34 +8,51 @@ import InstructorPanel from './InstructorPanel';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [role, setRole] = useState("");
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken = parseJwt(token);
-      if (decodedToken) {
-        setIsLoggedIn(true);
-        setIsAdmin(decodedToken.isAdmin);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     const decodedToken = parseJwt(token);
+  //     if (decodedToken) {
+  //       setIsLoggedIn(true);
+  //       setIsAdmin(decodedToken.isAdmin);
+  //     }
+  //   }
+  // }, []);
 
-  const handleLogin = (isAdmin) => {
+  const handleLogin = (token, userRole) => {
     setIsLoggedIn(true);
-    setIsAdmin(isAdmin);
+    setRole(userRole);
+    localStorage.setItem('token', token);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setRole('');
+    localStorage.removeItem('token');
+    window.location.href = '/'; 
   };
 
   return (
     <Router>
       <div>
         <Toaster />
+        <nav>
+          <ul>
+            {isLoggedIn && (
+              <li className="sign-out"> 
+                <button onClick={handleLogout}>Sign Out</button>
+              </li>
+            )}
+          </ul>
+        </nav>
         <Routes>
           <Route
             path="/"
             element={
-              isLoggedIn ? 9(
-                isAdmin ? (
+              isLoggedIn ? (
+                role === "admin" ? (
                   <Navigate to="/admin" />
                 ) : (
                   <Navigate to="/instructor" />
